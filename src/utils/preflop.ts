@@ -89,9 +89,11 @@ export function getPreflopComment(c1: Card, c2: Card, equity: number): string {
     if (equity >= 0.35) return `${name} — 投机牌，翻后玩法关键`
     return `${name} — 需要极佳位置才考虑入池`
   }
-  if (equity >= 0.15) {
+  if (equity >= 0.10) {
     if (name === '72o') return `${name} — 毫无操作空间，建议光速弃牌`
-    return `${name} — 垃圾牌，除非大盲否则果断弃`
+    if (equity >= 0.18) return `${name} — 偏弱牌，位置好可观望`
+    return `${name} — 弱势起手，谨慎入池`
   }
+  if (name === '72o') return `${name} — 毫无操作空间，建议光速弃牌`
   return `${name} — 极其危险，果断弃牌保平安`
 }

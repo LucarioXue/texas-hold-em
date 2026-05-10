@@ -3,9 +3,9 @@ import type { Card } from '../types'
 const SUIT_SYMBOL: Record<string, string> = { s: '♠', h: '♥', d: '♦', c: '♣' }
 const SUIT_COLOR: Record<string, string> = {
   s: 'text-white',
-  h: 'text-red-500',
-  d: 'text-red-500',
-  c: 'text-green-400',
+  h: 'text-red-400',
+  d: 'text-neon-blue',
+  c: 'text-emerald-300',
 }
 
 export default function CardSlot({
@@ -41,7 +41,10 @@ export default function CardSlot({
             </span>
           </div>
         ) : (
-          <div className="flex items-center justify-center h-full text-white/15 text-lg">+</div>
+          <div
+            className="flex items-center justify-center h-full text-white/15 text-lg"
+            style={{ animation: 'slot-pulse 2s ease-in-out infinite' }}
+          >+</div>
         )}
       </button>
       {label && (

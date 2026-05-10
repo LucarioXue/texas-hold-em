@@ -4,9 +4,9 @@ import { Trash2, Undo2 } from 'lucide-react'
 
 const SUITS: { value: Suit; symbol: string; color: string }[] = [
   { value: 's', symbol: '♠', color: 'text-white' },
-  { value: 'h', symbol: '♥', color: 'text-red-500' },
-  { value: 'd', symbol: '♦', color: 'text-red-500' },
-  { value: 'c', symbol: '♣', color: 'text-green-400' },
+  { value: 'h', symbol: '♥', color: 'text-red-400' },
+  { value: 'd', symbol: '♦', color: 'text-neon-blue' },
+  { value: 'c', symbol: '♣', color: 'text-emerald-300' },
 ]
 
 const RANKS: Rank[] = ['2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A']
