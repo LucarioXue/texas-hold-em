@@ -1,0 +1,18 @@
+{
+  "name": "Poker Decision — 德州决策助手",
+  "short_name": "Poker Decision",
+  "description": "德州扑克线下决策辅助工具",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#1A1C23",
+  "theme_color": "#1A1C23",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
