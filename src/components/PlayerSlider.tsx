@@ -1,5 +1,6 @@
 import { useGameState, useGameDispatch } from '../context/GameContext'
 import GlassPanel from './GlassPanel'
+import { Users } from 'lucide-react'
 
 export default function PlayerSlider() {
   const { playerCount } = useGameState()
@@ -8,7 +9,8 @@ export default function PlayerSlider() {
   return (
     <GlassPanel className="px-4 py-3">
       <div className="flex items-center justify-between mb-1">
-        <span className="text-white/50 text-xs font-medium tracking-wider uppercase">
+        <span className="flex items-center gap-1 text-white/50 text-xs font-medium tracking-wider uppercase">
+          <Users size={14} strokeWidth={2} />
           牌局人数
         </span>
         <span className="text-gold text-2xl font-bold tabular-nums">

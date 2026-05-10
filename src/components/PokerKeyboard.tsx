@@ -1,5 +1,6 @@
 import { useGameState, useGameDispatch } from '../context/GameContext'
 import type { Suit, Rank } from '../types'
+import { Trash2, Undo2 } from 'lucide-react'
 
 const SUITS: { value: Suit; symbol: string; color: string }[] = [
   { value: 's', symbol: '♠', color: 'text-white' },
@@ -84,18 +85,20 @@ export default function PokerKeyboard() {
 
         <button
           onClick={() => dispatch({ type: 'CLEAR_ALL' })}
-          className="bg-white/5 border border-white/10 rounded-lg text-white/50 text-xs font-bold
-            transition-all duration-100 active:scale-95 hover:bg-white/10 hover:text-white/70"
+          className="flex items-center justify-center gap-0.5 bg-white/5 border border-white/10 rounded-lg text-white/40 text-xs font-bold
+            transition-all duration-100 active:scale-95 hover:bg-white/10 hover:text-white/60"
         >
-          清空
+          <Trash2 size={14} strokeWidth={2} />
+          <span>清空</span>
         </button>
 
         <button
           onClick={() => dispatch({ type: 'UNDO' })}
-          className="bg-white/5 border border-white/10 rounded-lg text-white/50 text-xs font-bold
-            transition-all duration-100 active:scale-95 hover:bg-white/10 hover:text-white/70"
+          className="flex items-center justify-center gap-0.5 bg-white/5 border border-white/10 rounded-lg text-white/40 text-xs font-bold
+            transition-all duration-100 active:scale-95 hover:bg-white/10 hover:text-white/60"
         >
-          撤销
+          <Undo2 size={14} strokeWidth={2} />
+          <span>撤销</span>
         </button>
 
         <div />

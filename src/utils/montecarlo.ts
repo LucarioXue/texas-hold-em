@@ -1,11 +1,17 @@
 import type { Card } from '../types'
 import { createDeck, removeCards, shuffle } from './deck'
-import { evaluate7 } from './evaluator'
+import { evaluate7, getHandType, handTypeLabel } from './evaluator'
+
+export interface HandTypeDist {
+  name: string
+  probability: number
+}
 
 export interface SimulationResult {
   winRate: number
   tieRate: number
   iterations: number
+  handDistribution: HandTypeDist[]
 }
 
 /**
@@ -29,6 +35,7 @@ export function runSimulation(
 
   let wins = 0
   let ties = 0
+  const handTypeCounts = new Array<number>(10).fill(0)
 
   for (let i = 0; i < iterations; i++) {
     const deck = shuffle(baseDeck)
@@ -45,6 +52,7 @@ export function runSimulation(
     // Evaluate hero
     const heroHand = [...holeCards, ...allCommunity]
     const heroScore = evaluate7(heroHand)
+    handTypeCounts[getHandType(heroScore)]++
 
     // Evaluate each opponent, track best opponent score
     let bestOpponentScore = -1
@@ -62,9 +70,18 @@ export function runSimulation(
     }
   }
 
+  const handDistribution: HandTypeDist[] = []
+  for (let type = 9; type >= 1; type--) {
+    handDistribution.push({
+      name: handTypeLabel(type),
+      probability: handTypeCounts[type] / iterations,
+    })
+  }
+
   return {
     winRate: wins / iterations,
     tieRate: ties / iterations,
     iterations,
+    handDistribution,
   }
 }

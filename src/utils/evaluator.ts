@@ -112,18 +112,27 @@ export function evaluate7(cards: Card[]): number {
   return best
 }
 
+const HAND_TYPE_NAMES: Record<number, string> = {
+  [STRAIGHT_FLUSH]: '同花顺',
+  [FOUR_KIND]: '四条',
+  [FULL_HOUSE]: '葫芦',
+  [FLUSH]: '同花',
+  [STRAIGHT]: '顺子',
+  [THREE_KIND]: '三条',
+  [TWO_PAIR]: '两对',
+  [ONE_PAIR]: '一对',
+  [HIGH_CARD]: '高牌',
+}
+
 export function handTypeName(scoreVal: number): string {
   const type = Math.floor(scoreVal / (15 ** 5))
-  const names: Record<number, string> = {
-    [STRAIGHT_FLUSH]: '同花顺',
-    [FOUR_KIND]: '四条',
-    [FULL_HOUSE]: '葫芦',
-    [FLUSH]: '同花',
-    [STRAIGHT]: '顺子',
-    [THREE_KIND]: '三条',
-    [TWO_PAIR]: '两对',
-    [ONE_PAIR]: '一对',
-    [HIGH_CARD]: '高牌',
-  }
-  return names[type] || '未知'
+  return HAND_TYPE_NAMES[type] || '未知'
+}
+
+export function getHandType(score: number): number {
+  return Math.floor(score / (15 ** 5))
+}
+
+export function handTypeLabel(type: number): string {
+  return HAND_TYPE_NAMES[type] || '未知'
 }
