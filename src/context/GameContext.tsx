@@ -54,7 +54,7 @@ function placeCard(state: GameState, suit: Suit, rank: Rank): GameState {
 function reducer(state: GameState, action: GameAction): GameState {
   switch (action.type) {
     case 'SET_PLAYER_COUNT':
-      return { ...state, playerCount: Math.min(9, Math.max(2, action.count)) }
+      return { ...state, playerCount: Math.min(10, Math.max(2, action.count)) }
 
     case 'SELECT_SUIT': {
       if (!state.activeSlot) return state

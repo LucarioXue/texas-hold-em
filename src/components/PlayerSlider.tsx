@@ -21,7 +21,7 @@ export default function PlayerSlider() {
       <input
         type="range"
         min="2"
-        max="9"
+        max="10"
         step="1"
         value={playerCount}
         onChange={e => dispatch({ type: 'SET_PLAYER_COUNT', count: Number(e.target.value) })}
@@ -29,7 +29,7 @@ export default function PlayerSlider() {
       />
       <div className="flex justify-between text-white/25 text-[10px] font-medium mt-0.5 px-0.5">
         <span>2</span><span>3</span><span>4</span><span>5</span>
-        <span>6</span><span>7</span><span>8</span><span>9</span>
+        <span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
       </div>
     </GlassPanel>
   )
