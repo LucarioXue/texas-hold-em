@@ -4,6 +4,8 @@ import { rankValue } from './deck'
 export interface OutsInfo {
   type: 'flush' | 'oesd' | 'gutshot' | 'combo' | 'none'
   outs: number
+  /** Probability of hitting the draw by the river (flop) or on the next card (turn) */
+  probability: number
   description: string
 }
 
@@ -60,28 +62,58 @@ export function detectOuts(holeCards: [Card, Card], communityCards: Card[]): Out
     }
   }
 
+  const stage = communityCards.length as 3 | 4
+
   // Build result
   if (flushSuit && bestDraw) {
     const sOuts = bestDraw.oesd ? 8 : 4
+    const totalOuts = flushOuts + sOuts
     return {
       type: 'combo',
-      outs: flushOuts + sOuts,
+      outs: totalOuts,
+      probability: outsToProbability(totalOuts, stage),
       description: `同花听牌（${flushOuts}张补牌）+ ${bestDraw.desc}`,
     }
   }
 
   if (flushSuit) {
-    return { type: 'flush', outs: flushOuts, description: `同花听牌，有 ${flushOuts} 张补牌` }
+    return {
+      type: 'flush',
+      outs: flushOuts,
+      probability: outsToProbability(flushOuts, stage),
+      description: `同花听牌，有 ${flushOuts} 张补牌`,
+    }
   }
 
   if (bestDraw) {
     const outs = bestDraw.oesd ? 8 : 4
-    return { type: bestDraw.oesd ? 'oesd' : 'gutshot', outs, description: `${bestDraw.desc}，有 ${outs} 张补牌` }
+    return {
+      type: bestDraw.oesd ? 'oesd' : 'gutshot',
+      outs,
+      probability: outsToProbability(outs, stage),
+      description: `${bestDraw.desc}，有 ${outs} 张补牌`,
+    }
   }
 
-  return { type: 'none', outs: 0, description: '' }
+  return { type: 'none', outs: 0, probability: 0, description: '' }
 }
 
-export function outsToProbability(outs: number): number {
-  return Math.min(outs * 0.02, 0.99)
+/**
+ * Calculate actual probability of hitting at least one out.
+ *
+ * Flop (3 community cards, 2 to come): uses hypergeometric / complement of missing both.
+ *   P = 1 − C(47−outs, 2) / C(47, 2)
+ * Turn (4 community cards, 1 to come): P = outs / 46
+ */
+export function outsToProbability(outs: number, communityCount: 3 | 4): number {
+  if (outs <= 0) return 0
+  if (communityCount === 4) {
+    // Turn: only the river remains — 46 unknown cards
+    return Math.min(outs / 46, 1)
+  }
+  // Flop: turn + river remain — 47 unknown cards
+  const unknown = 47
+  // Probability of missing on both streets
+  const missBoth = ((unknown - outs) / unknown) * ((unknown - 1 - outs) / (unknown - 1))
+  return Math.min(1 - missBoth, 1)
 }

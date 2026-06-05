@@ -140,7 +140,7 @@ export default function DecisionPanel() {
                     {analysis.outsInfo.type === 'combo' && '组合听牌'}
                   </span>
                   <span className="text-white/40">
-                    {analysis.outsInfo.outs} 张 Outs · 下轮约 {(analysis.outsInfo.outs * 2).toFixed(0)}%
+                    {analysis.outsInfo.outs} 张 Outs · {commFilled.length >= 4 ? '下轮约' : '到河牌约'} {(analysis.outsInfo.probability * 100).toFixed(1)}%
                   </span>
                 </div>
               )}
@@ -183,7 +183,10 @@ export default function DecisionPanel() {
       {/* Iterations label */}
       {stage === 'postflop' && (
         <p className="mt-2 text-white/20 text-[10px]">
-          基于 {analysisPlayerCount} 人局 4000 次蒙特卡洛模拟
+          {commFilled.length === 4
+            ? `基于 ${analysisPlayerCount} 人局 44 张河牌穷举计算`
+            : `基于 ${analysisPlayerCount} 人局 4000 次蒙特卡洛模拟`
+          }
         </p>
       )}
     </GlassPanel>
